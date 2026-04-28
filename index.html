@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>千歳YOND お客様アンケート</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 400px;
+            min-height: 100vh;
+            box-sizing: border-box;
+            padding: 30px 20px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .header h1 {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+        }
+        .header p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0;
+        }
+        .store-name {
+            display: inline-block;
+            background: #eef2f5;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            resize: none;
+            margin-bottom: 25px;
+            transition: border-color 0.3s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        .btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(231, 76, 60, 0.2);
+        }
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 4px rgba(231, 76, 60, 0.2);
+        }
+        #ticket-screen {
+            display: none;
+            text-align: center;
+        }
+        .ticket {
+            background: #fff8e1;
+            border: 2px dashed #f39c12;
+            padding: 25px 15px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        .ticket h2 {
+            margin: 0 0 15px 0;
+            color: #d35400;
+            font-size: 1.4rem;
+        }
+        .ticket .highlight {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #c0392b;
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+        .ticket p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .google-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+        .google-section p {
+            font-size: 0.85rem;
+            color: #333;
+            text-align: left;
+            margin: 0 0 15px 0;
+            line-height: 1.5;
+        }
+        .btn-google {
+            background: #4285F4;
+            box-shadow: 0 4px 6px rgba(66, 133, 244, 0.2);
+        }
+        .btn-google:active {
+            box-shadow: 0 2px 4px rgba(66, 133, 244, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="input-screen">
+            <div class="header">
+                <div class="store-name">オールデイダイニング千歳YOND</div>
+                <h1>お店をもっと良くするために<br>お声を聞かせてください！</h1>
+                <p>ご感想を入力して特典をGET🎁</p>
+            </div>
+            
+            <textarea id="feedback" placeholder="お料理の味やスタッフの対応など、今日感じたことを自由にお書きください♪"></textarea>
+            
+            <button class="btn" onclick="processFeedback()">特典画面へ進む</button>
+        </div>
+
+        <div id="ticket-screen">
+            <div class="ticket">
+                <h2>🎁 特典獲得チケット</h2>
+                <p>この画面をスタッフにお見せください</p>
+                <div class="highlight">
+                    飲み放題30分延長<br>
+                    <span style="font-size: 0.9rem; color: #555;">または</span><br>
+                    ミニ牛乳ソフトクリーム
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 10px;">※グループ内で特典は統一をお願いします</p>
+            </div>
+
+            <div class="google-section">
+                <p><strong>★ YONDからのお願い ★</strong><br>
+                今書いていただいた内容は、自動的にコピーされました！<br><br>
+                そのまま下のボタンからGoogleを開いて、「貼り付け（ペースト）」で応援していただけませんか？<br>スタッフの何よりの励みになります！</p>
+                
+                <button class="btn btn-google" onclick="goToGoogle()">Googleを開いて応援する</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function processFeedback() {
+            const text = document.getElementById('feedback').value;
+            if (!text.trim()) { 
+                alert('ぜひ一言ご感想をお願いします！'); 
+                return; 
+            }
+            
+            // クリップボードにコピー
+            navigator.clipboard.writeText(text).then(() => {
+                // 画面切り替え
+                document.getElementById('input-screen').style.display = 'none';
+                document.getElementById('ticket-screen').style.display = 'block';
+                // ページ上部へスクロール
+                window.scrollTo(0, 0);
+            }).catch(err => {
+                // コピー制限があるブラウザ環境用の予備動作
+                document.getElementById('input-screen').style.display = 'none';
+                document.getElementById('ticket-screen').style.display = 'block';
+                window.scrollTo(0, 0);
+            });
+        }
+
+        function goToGoogle() {
+            // ① 取り急ぎ、千歳YOND様のGoogleマップ検索結果が開くように設定しています。
+            // ② 【推奨】Googleビジネスプロフィールの管理画面から「レビューを依頼」の専用短縮URL（https://g.page/r/...）を取得し、以下のURLと差し替えると、直接星をつける画面が開くためより効果的です！
+            window.location.href = "https://www.google.com/maps/search/?api=1&query=オールデイダイニング千歳YOND";
+        }
+    </script>
+</body>
+</html>
