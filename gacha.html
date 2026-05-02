@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>たき火炉端 雨やどり｜ご感想でガチャ無料🎰</title>
+<style>
+/* ==========================================================================
+   CSS 変数とフォント
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
+
+:root {
+  /* メインカラー（たき火・温かみ） */
+  --fire:     #c0392b;
+  --fire-l:   #e67e22;
+  --amber:    #d4850a;
+  --amber-l:  #f0b840;
+  --amber-xl: #fde8a0;
+  
+  /* 木目・墨 */
+  --wood:     #3e2307;
+  --wood-l:   #5d3a15;
+  --ink:      #1a0e00;
+  --ink-l:    #444;
+
+  /* ベースカラー */
+  --cream:    #fdf5e4;
+  --smoke:    #f7efe0;
+  --white:    #ffffff;
+  
+  /* システム・アクセント */
+  --gray:     #aaa;
+  --google-blue: #4285F4;
+}
+
+/* ==========================================================================
+   リセット・リキッドレイアウト
+   ========================================================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-weight: 500;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  line-height: 1.6;
+}
+
+.app {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(74,44,10,0.1);
+}
+
+/* 画面切り替え */
+.screen { display: none; flex-direction: column; flex: 1; }
+.screen.active { display: flex; animation: fadeUp 0.4s ease-out; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 共通コンポーネント */
+.container { padding: 0 20px; }
+.b { font-weight: 700; }
+
+/* ==========================================================================
+   アニメーション：たき火・炎
+   ========================================================================== */
+@keyframes flicker {
+  0%,100% { transform: scale(1) translateY(0); }
+  25%      { transform: scale(1.05, 0.95) translateY(1px); }
+  50%      { transform: scale(0.95, 1.05) translateY(-1px); }
+  75%      { transform: scale(1.03, 0.97) translateY(0.5px); }
+}
+
+@keyframes glow {
+  0%,100% { box-shadow: 0 0 10px rgba(240,120,20,0.4); }
+  50% { box-shadow: 0 0 25px rgba(240,120,20,0.7); }
+}
+
+/* ==========================================================================
+   SCREEN 1 ヘッダー
+   ========================================================================== */
+.s1-header {
+  background: var(--wood);
+  padding: 20px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 木目テクスチャ風 */
+.s1-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: 
+    repeating-linear-gradient(92deg, transparent 0, transparent 20px, rgba(255,255,255,0.01) 20px, rgba(255,255,255,0.01) 21px),
+    repeating-linear-gradient(170deg, transparent 0, transparent 40px, rgba(255,255,255,0.01) 40px, rgba(255,255,255,0.01) 41px);
+  pointer-events: none;
+}
+
+.header-top {
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative; z-index: 1;
+}
+
+.lanterns { display: flex; gap: 8px; }
+.lantern {
+  width: 20px; height: 26px;
+  background: radial-gradient(circle at 40% 35%, #fff 0%, var(--amber-l) 30%, var(--fire) 70%);
+  border-radius: 50% 50% 40% 40%;
+  box-shadow: 0 0 8px rgba(240,120,20,0.6);
+  animation: glow 1.5s ease-in-out infinite;
+}
+
+.shop-badge {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid var(--amber-l);
+  color: var(--amber-l);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.header-main {
+  padding: 16px 20px;
+  text-align: center;
+  position: relative; z-index: 1;
+}
+
+.shop-name-jp {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--amber-l);
+  letter-spacing: 0.15em;
+  line-height: 1.4;
+}
+.shop-name-jp span {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--white);
+  display: block;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+.header-sub {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.75rem;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* たき火の区切り */
+.fire-divider {
+  height: 36px;
+  background: var(--wood);
+  position: relative;
+  overflow: hidden;
+}
+.fire-divider::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 38px;
+  background: var(--white);
+  border-radius: 50% 50% 0 0;
+}
+.flames {
+  position: absolute;
+  bottom: 8px; left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  z-index: 1;
+}
+.flame {
+  width: 10px; height: 16px;
+  border-radius: 50% 50% 30% 30%;
+  animation: flicker infinite ease-in-out;
+  transform-origin: bottom center;
+}
+.flame:nth-child(1) { background: #e74c3c; animation-duration: 0.7s; animation-delay: -0.1s; height: 14px; }
+.flame:nth-child(2) { background: #f39c12; animation-duration: 0.6s; animation-delay: -0.2s; height: 18px; }
+.flame:nth-child(3) { background: #e67e22; animation-duration: 0.8s; animation-delay: -0.3s; height: 21px; }
+.flame:nth-child(4) { background: #f1c40f; animation-duration: 0.5s; animation-delay: -0.4s; height: 17px; }
+.flame:nth-child(5) { background: #d35400; animation-duration: 0.7s; animation-delay: -0.5s; height: 13px; }
+
+/* ==========================================================================
+   SCREEN 1 ボディ
+   ========================================================================= */
+.s1-body {
+  padding: 24px 0 40px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 特典バナー */
+.reward-banner {
+  margin: 0 16px 24px;
+  background: linear-gradient(135deg, #fffcf0, var(--amber-xl));
+  border: 2px solid var(--amber);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(212,133,10,0.15);
+}
+.reward-banner::before {
+  content: '🎰';
+  position: absolute;
+  right: -10px; bottom: -10px;
+  font-size: 3.5rem;
+  opacity: 0.15;
+}
+.reward-icon { font-size: 2rem; flex-shrink: 0; }
+.reward-text { font-size: 0.82rem; line-height: 1.6; color: var(--wood); }
+.reward-text strong {
+  color: var(--fire);
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* セクションタイトル */
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+/* 参考例 */
+.examples {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.ex-btn {
+  background: var(--smoke);
+  border: 1.5px solid #e2d7c0;
+  border-radius: 10px;
+  padding: 12px 36px 12px 16px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--ink-l);
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-weight: 500;
+  transition: all 0.1s ease;
+  position: relative;
+}
+.ex-btn::after {
+  content: '↓';
+  position: absolute;
+  right: 14px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--amber);
+  font-weight: 700;
+  opacity: 0.7;
+}
+.ex-btn:active, .ex-btn.selected {
+  background: #fff;
+  border-color: var(--amber);
+  color: var(--wood);
+  box-shadow: 0 2px 8px rgba(212,133,10,0.15);
+}
+
+/* テキストエリア */
+.feedback-section { margin-bottom: 24px; }
+textarea {
+  width: 100%;
+  min-height: 120px;
+  border: 2px solid #e2d7c0;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 0.95rem;
+  resize: none;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  line-height: 1.7;
+  color: var(--ink);
+  background: var(--smoke);
+  transition: all 0.2s;
+  margin-bottom: 6px;
+}
+textarea:focus {
+  outline: none;
+  border-color: var(--amber);
+  background: var(--white);
+  box-shadow: 0 0 10px rgba(212,133,10,0.1);
+}
+.char-count {
+  font-size: 0.7rem;
+  color: var(--gray);
+  text-align: right;
+  padding-right: 4px;
+}
+
+.hint-box {
+  background: rgba(230,126,34,0.08);
+  border-left: 3px solid var(--fire-l);
+  border-radius: 0 10px 10px 0;
+  padding: 12px 16px;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: #7d3c00;
+  margin-bottom: 24px;
+}
+
+.submit-btn-wrap {
+  position: sticky;
+  bottom: 0;
+  padding: 16px 20px;
+  background: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0));
+  margin-top: auto;
+}
+.submit-btn {
+  background: linear-gradient(135deg, var(--fire), var(--fire-l));
+  color: white;
+  border: none;
+  padding: 20px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  box-shadow: 0 6px 20px rgba(192,57,43,0.35);
+  transition: transform 0.1s, box-shadow 0.1s;
+  letter-spacing: 0.05em;
+}
+.submit-btn:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 0 3px 12px rgba(192,57,43,0.25);
+}
+
+/* ==========================================================================
+   SCREEN 2 チケット画面
+   ========================================================================= */
+.ticket-page { background: var(--smoke); }
+
+.s2-header {
+  background: var(--wood);
+  padding: 16px 20px 14px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.s2-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(92deg, transparent 0, transparent 20px, rgba(255,255,255,0.02) 20px, rgba(255,255,255,0.02) 21px);
+}
+.s2-header p {
+  color: var(--amber-l);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  opacity: 0.85;
+  position: relative; z-index: 1;
+  font-weight: 700;
+}
+.s2-header h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.4rem;
+  color: var(--white);
+  margin-top: 4px;
+  position: relative; z-index: 1;
+}
+
+/* チケット本体 */
+.ticket {
+  margin: 16px 16px 0;
+  background: linear-gradient(145deg, #fffcf6, var(--amber-xl));
+  border: 3px solid var(--amber);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 5px 25px rgba(74,44,10,0.1);
+}
+.ticket::before {
+  content: '🎰';
+  position: absolute;
+  font-size: 5rem;
+  opacity: 0.04;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-10deg);
+  pointer-events: none;
+}
+
+.ticket-top {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #999;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.ticket-top::before, .ticket-top::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+/* ガチャチケット */
+.gacha-ticket {
+  background: linear-gradient(135deg, var(--wood), var(--wood-l));
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(74,44,10,0.25);
+}
+.gacha-ticket::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--amber-l) 0%, var(--white) 50%, var(--amber-l) 100%);
+}
+.gacha-ticket::after {
+  content: '✂ - - - - - - - - - - - - - - - ✂';
+  position: absolute;
+  bottom: 8px; left: 0; right: 0;
+  text-align: center;
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.05em;
+  font-family: monospace;
+}
+.gacha-icon { font-size: 2.8rem; margin-bottom: 4px; }
+.gacha-label {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--amber-l);
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+}
+.gacha-sub {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.65);
+  margin: 6px 0 8px;
+  line-height: 1.5;
+}
+.gacha-free {
+  display: inline-block;
+  background: var(--fire);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 3px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+}
+
+.ticket-note { font-size: 0.7rem; color: #999; }
+.ticket-divider { border: none; border-top: 2px dashed #ddd6c2; margin: 12px -20px; }
+.ticket-valid { font-size: 0.75rem; color: var(--wood); font-weight: 700; }
+
+/* Google口コミセクション */
+.google-section {
+  margin: 16px;
+  background: var(--white);
+  border: 1.5px solid rgba(66,133,244,0.15);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(66,133,244,0.05);
+}
+.google-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.google-icon {
+  width: 20px; height: 20px;
+  background: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.google-icon svg { width: 14px; height: 14px; }
+.google-title { font-size: 0.9rem; font-weight: 700; color: #1a3a5c; }
+
+.google-p { font-size: 0.8rem; color: #444; line-height: 1.6; margin-bottom: 14px; }
+
+.step-guide { margin: 12px 0 16px; border-top: 1px solid #f0f0f0; }
+.sg-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.sg-item:last-child { border-bottom: none; }
+.sg-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--google-blue);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.sg-text { font-size: 0.85rem; line-height: 1.6; color: var(--ink-l); }
+.sg-tag {
+  display: inline-block;
+  background: rgba(66,133,244,0.08);
+  color: var(--google-blue);
+  font-size: 0.65rem;
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-weight: 700;
+  margin-left: 5px;
+}
+
+.google-btn {
+  background: var(--google-blue);
+  color: white;
+  border: none;
+  padding: 18px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  box-shadow: 0 4px 15px rgba(66,133,244,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.1s ease;
+  letter-spacing: 0.03em;
+}
+.google-btn:active { transform: translateY(2px) scale(0.98); box-shadow: 0 2px 8px rgba(66,133,244,0.2); }
+
+.google-btn .google-icon-inbtn {
+  width: 22px; height: 22px;
+  background: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  padding: 3px;
+}
+
+.skip-link {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #bbb;
+  margin: 16px 16px 32px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 10px;
+}
+
+/* ==========================================================================
+   SCREEN 3 完了画面
+   ========================================================================= */
+.s3-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 32px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--white) 0%, var(--smoke) 100%);
+}
+.done-circle {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 30%, #fff 0%, var(--white) 15%, var(--amber) 70%, var(--amber-l) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3rem;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 30px rgba(212,133,10,0.35);
+  animation: fadeUp 0.6s ease;
+}
+.s3-wrap h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--wood);
+  margin-bottom: 12px;
+}
+.s3-wrap p { font-size: 0.9rem; color: #666; line-height: 2; }
+.back-btn {
+  margin-top: 40px;
+  background: var(--white);
+  border: 2px solid var(--amber-l);
+  color: var(--wood);
+  padding: 14px 32px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  box-shadow: 0 4px 12px rgba(212,133,10,0.15);
+  transition: all 0.1s;
+}
+.back-btn:active { transform: translateY(1px); box-shadow: 0 2px 6px rgba(212,133,10,0.1); }
+
+/* ==========================================================================
+   UIフィードバック：コピー完了ポップアップ
+   ========================================================================= */
+.toast {
+  position: fixed;
+  bottom: -60px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  z-index: 1000;
+  opacity: 0;
+  transition: bottom 0.3s ease, opacity 0.3s ease;
+  white-space: nowrap;
+}
+.toast.active {
+  bottom: 30px; opacity: 1;
+}
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ========== SCREEN 1 ========== -->
+  <div class="screen active" id="screen1">
+    <div class="s1-header">
+      <div class="header-top">
+        <div class="lanterns">
+          <div class="lantern"></div>
+          <div class="lanterns" style="margin-left:-2px;margin-top:-2px;"><div class="lantern" style="transform:scale(0.85);opacity:0.9;"></div></div>
+        </div>
+        <div class="shop-badge">たき火の匂いに、誘われて。</div>
+        <div class="lanterns">
+          <div class="lanterns" style="margin-right:-2px;margin-top:-2px;"><div class="lantern" style="transform:scale(0.85);opacity:0.9;"></div></div>
+          <div class="lantern"></div>
+        </div>
+      </div>
+      <div class="header-main">
+        <div class="shop-name-jp">たき火炉端<br><span>雨やどり</span></div>
+        <div class="header-sub">ご来店いただき、ありがとうございます🙏</div>
+      </div>
+      <div class="fire-divider">
+        <div class="flames">
+          <div class="flame"></div>
+          <div class="flame"></div>
+          <div class="flame"></div>
+          <div class="flame"></div>
+          <div class="flame"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="s1-body">
+      <div class="reward-banner">
+        <div class="reward-icon">🎰</div>
+        <div class="reward-text">
+          <strong>感想を書いて、ガチャ無料！</strong>
+          豪華賞品が当たる「雨やどりガチャ」を1回プレゼントいたします🎁
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="section-label">👇 参考例をタップすると入力されます</div>
+        <div class="examples">
+          <button class="ex-btn" onclick="setExample(this, 'たき火を囲む雰囲気が最高でした！炭火の香りがたまらなくて、日本酒がすすみすぎました。千歳の夜にぴったりのお店🔥✨\n#雨やどり #たき火炉端')">🔥 たき火の雰囲気が最高だった！</button>
+          <button class="ex-btn" onclick="setExample(this, '魚介の炭火焼きが感動モノでした。特にホタテが甘くて新鮮！スタッフの方もフレンドリーで居心地抜群😊\n#たき火炉端雨やどり')">🐚 魚介の炭火焼きが新鮮で美味しかった</button>
+          <button class="ex-btn" onclick="setExample(this, '飲み会で利用しました。隠れ家のような個室で盛り上がりました。飲み放題の種類も豊富で大満足です🍺また来ます！\n#千歳飲み会 #たき火炉端')">🍺 飲み会・宴会で盛り上がった</button>
+          <button class="ex-btn" onclick="setExample(this, 'たき火の音が心地いい、落ち着ける空間でした。ひとりでも入りやすくて、素敵な時間が過ごせました。必ずまた寄ります✨\n#ひとり飲み #千歳グルメ')">✨ 雰囲気が落ち着いていて癒された</button>
+        </div>
+
+        <div class="feedback-section">
+          <div class="section-label">✏️ 今夜のご感想をお聞かせください（なんでもOK！）</div>
+          <textarea id="feedback" 
+            placeholder="今夜のご感想を自由にお書きください🍶&#10;例：たき火が綺麗だった、炉端焼きが美味しかった、スタッフが気さくだった　など"
+            oninput="updateCount()"></textarea>
+          <div class="char-count"><span id="charNum">0</span>文字</div>
+        </div>
+
+        <div class="hint-box">
+          📸 <strong>写真も大歓迎です！</strong><br>
+          次の画面でGoogleに移動した後、お料理やたき火の写真も一緒に添付してもらえると、スタッフ一同とても喜びます🙏
+        </div>
+      </div>
+
+      <div class="submit-btn-wrap">
+        <button class="submit-btn" onclick="goToTicket()">感想を送ってガチャ券をもらう 🎰</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SCREEN 2 ========== -->
+  <div class="screen ticket-page" id="screen2">
+    <div class="s2-header">
+      <p>スタッフにこの画面をお見せください</p>
+      <h2>🎰 ガチャ無料券</h2>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-top">こちらの券でガチャ1回無料！</div>
+      <div class="gacha-ticket">
+        <div class="gacha-icon">🎰</div>
+        <div class="gacha-label">雨やどりガチャ<br>1回無料券</div>
+        <div class="gacha-sub">豪華賞品が入った<br>大人の駄菓子屋ガチャ</div>
+        <div class="gacha-free">ハズレなし！</div>
+      </div>
+      <div class="ticket-note">※おひとり様1回限り有効</div>
+      <hr class="ticket-divider">
+      <div class="ticket-valid">✅ 本日限り有効　たき火炉端 雨やどり</div>
+    </div>
+
+    <div class="google-section">
+      <div class="google-header">
+        <div class="google-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/><path d="M1 1h22v22H1z" fill="none"/></svg>
+        </div>
+        <div class="google-title">Googleにも温かい応援を！</div>
+      </div>
+      <div class="google-p">
+        今いただいたご感想は<span class="b">自動でコピー済み</span>です。<br>
+        下のボタンから★評価と、長押し→「貼り付け」だけで完了します！
+      </div>
+      
+      <div class="step-guide">
+        <div class="sg-item">
+          <div class="sg-num">1</div>
+          <div class="sg-text">下の「Googleで応援する」をタップ</div>
+        </div>
+        <div class="sg-item">
+          <div class="sg-num">2</div>
+          <div class="sg-text">★評価をタップ<span class="sg-tag">おすすめ★5</span></div>
+        </div>
+        <div class="sg-item">
+          <div class="sg-num">3</div>
+          <div class="sg-text">入力欄を長押し→「<span class="b">貼り付け</span>」で完了！</div>
+        </div>
+      </div>
+      
+      <button class="google-btn" onclick="goToGoogle()">
+        <div class="google-icon-inbtn">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/><path d="M1 1h22v22H1z" fill="none"/></svg>
+        </div>
+        貼り付けて応援する（コピー済み）
+      </button>
+    </div>
+
+    <div class="skip-link" onclick="goToDone()">応援はスキップして完了する</div>
+  </div>
+
+  <!-- ========== SCREEN 3 ========== -->
+  <div class="screen" id="screen3">
+    <div class="s3-wrap">
+      <div class="done-circle">🙏</div>
+      <h2>ありがとうございます！</h2>
+      <p>
+        お客様からの一言が、<br>
+        明日への活力になります😊<br><br>
+        雨やどりで過ごした夜が、<br>
+        良い思い出になりますように。<br><br>
+        またのご来店を、<br>
+        心よりお待ちしております🔥
+      </p>
+      <button class="back-btn" onclick="resetApp()">最初に戻る</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- UIフィードバック用ポップアップ -->
+<div class="toast" id="toast">感想をコピーしました！</div>
+
+<script>
+  // 1. 文字数カウンター
+  function updateCount() {
+    document.getElementById('charNum').textContent = document.getElementById('feedback').value.length;
+  }
+
+  // 2. 参考例を入力欄にセット
+  function setExample(btn, text) {
+    document.querySelectorAll('.ex-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    const ta = document.getElementById('feedback');
+    ta.value = text;
+    updateCount();
+    
+    // 入力欄へスムーズにスクロール
+    ta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    // フィードバック
+    showToast('入力欄にセットしました！修正もOKです。');
+    
+    // 少し遅らせてフォーカス（キーボード立ち上がり防止の工夫）
+    setTimeout(() => ta.focus(), 300);
+  }
+
+  // 3. チケット画面へ移動（コピー処理を含む）
+  function goToTicket() {
+    const text = document.getElementById('feedback').value.trim();
+    if (!text) {
+      alert('ぜひ一言ご感想をお願いします！\n参考例をタップするだけでもOKです😊');
+      return;
+    }
+    
+    // 文字列の最後に改行を追加して、投稿時に見やすく
+    const textToCopy = text + "\n#雨やどり #たき火炉端";
+    
+    // コピー処理
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        // コピー成功（最新ブラウザ）
+        showToast('感想をコピーしました！');
+        setTimeout(() => showScreen('screen2'), 500);
+      }).catch(err => {
+        // コピー失敗時のフォールバック
+        fallbackCopyTextToClipboard(textToCopy);
+      });
+    } else {
+      // 古いブラウザ用のフォールバック
+      fallbackCopyTextToClipboard(textToCopy);
+    }
+  }
+
+  // 4. Googleレビュー画面へ（★ここを超重要修正★）
+  function goToGoogle() {
+    // 【重要】以下を「Google ビジネス プロフィールの口コミ直接投稿URL」に差し替えてください。
+    // 例: window.open('https://g.page/r/XXXXXX/review', '_blank');
+    window.open('https://www.google.com/maps/search/?api=1&query=たき火炉端+雨やどり+千歳', '_blank');
+    
+    // 2.5秒後に完了画面へ（Googleマップアプリが立ち上がる時間を持たせる）
+    setTimeout(() => showScreen('screen3'), 2500);
+  }
+
+  // 5. 完了画面へ
+  function goToDone() { showScreen('screen3'); }
+
+  // 画面切り替え共通
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0); // 画面トップへスクロール
+  }
+
+  // 最初に戻る
+  function resetApp() {
+    document.getElementById('feedback').value = '';
+    updateCount();
+    document.querySelectorAll('.ex-btn').forEach(b => b.classList.remove('selected'));
+    showScreen('screen1');
+  }
+
+  // ポップアップ表示
+  function showToast(message) {
+    const t = document.getElementById('toast');
+    t.textContent = message;
+    t.classList.add('active');
+    setTimeout(() => t.classList.remove('active'), 2500);
+  }
+
+  // 古いブラウザ・Android用のコピー・フォールバック
+  function fallbackCopyTextToClipboard(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    // 画面外に隠す
+    ta.style.cssText = 'position:fixed;opacity:0;';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      const successful = document.execCommand('copy');
+      if (successful) {
+        showToast('感想をコピーしました！');
+        setTimeout(() => showScreen('screen2'), 500);
+      } else {
+        // コピーが完全に失敗した場合の緊急フォールバック（画面移動はさせる）
+        console.error('Copy failing');
+        showScreen('screen2'); 
+      }
+    } catch (e) {
+      console.error('Fallback copy fails');
+      showScreen('screen2');
+    }
+    document.body.removeChild(ta);
+  }
+</script>
+
+</body>
+</html>
