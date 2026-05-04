@@ -1,0 +1,27 @@
+<script>
+  function updateCount() { document.getElementById('charNum').textContent = document.getElementById('feedback').value.length; }
+  function setExample(btn, text) { document.querySelectorAll('.ex-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); const ta = document.getElementById('feedback'); ta.value = text; updateCount(); ta.scrollIntoView({ behavior: 'smooth', block: 'center' }); showToast('入力欄にセットしました！修正もOKです。'); setTimeout(() => ta.focus(), 300); }
+  
+  function goToTicket() { 
+    const text = document.getElementById('feedback').value.trim(); 
+    if (!text) { alert('ぜひ一言ご感想をお願いします！\n参考例をタップするだけでもOKです😊'); return; }
+    
+    // ▼ ここからGoogleフォーム（スプレッドシート）への裏側送信処理 ▼
+    const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSeMo0frNZmkOctIGc8jKGOPsbvwiFJocAgBih2jwy--19J36Q/formResponse';
+    const formData = new FormData();
+    formData.append('entry.1794258647', 'カミナリドッカン'); // 店舗名を自動送信
+    formData.append('entry.396516299', text); // 感想を自動送信
+    fetch(formUrl, { method: 'POST', mode: 'no-cors', body: formData }).catch(e => console.error(e));
+    // ▲ ここまで送信処理 ▲
+
+    const textToCopy = text + "\n#カミナリドッカン #立呑み中華";
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(textToCopy).then(() => { showToast('感想をコピーしました！'); setTimeout(() => showScreen('screen2'), 500); }).catch(err => { fallbackCopyTextToClipboard(textToCopy); }); } else { fallbackCopyTextToClipboard(textToCopy); } 
+  }
+  
+  function goToGoogle() { window.open('https://search.google.com/local/writereview?placeid=ChIJvQKN7_ohdV8RQGomTIxrhaw', '_blank'); setTimeout(() => showScreen('screen3'), 2500); }
+  function goToDone() { showScreen('screen3'); }
+  function showScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0, 0); }
+  function resetApp() { document.getElementById('feedback').value = ''; updateCount(); document.querySelectorAll('.ex-btn').forEach(b => b.classList.remove('selected')); showScreen('screen1'); }
+  function showToast(message) { const t = document.getElementById('toast'); t.textContent = message; t.classList.add('active'); setTimeout(() => t.classList.remove('active'), 2500); }
+  function fallbackCopyTextToClipboard(text) { const ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0;'; document.body.appendChild(ta); ta.select(); try { const successful = document.execCommand('copy'); if (successful) { showToast('感想をコピーしました！'); setTimeout(() => showScreen('screen2'), 500); } else { showScreen('screen2'); } } catch (e) { showScreen('screen2'); } document.body.removeChild(ta); }
+</script>
