@@ -3,65 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>たき火炉端 雨やどり｜ご感想でガチャ無料🎰</title>
+<title>たき火炉端 雨やどり</title>
 <style>
-:root { --fire: #cc3300; --amber: #ffaa00; --wood: #2a1100; --ink: #ffffff; --cream: #000000; --smoke: #1a0a00; --white: #2a1a10; --google-blue: #4285F4; }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Zen Kaku Gothic New', sans-serif; background: var(--cream); color: var(--ink); display: flex; justify-content: center; }
+:root { --fire: #cc3300; --amber: #ffaa00; --wood: #2a1100; --smoke: #1a0a00; --white: #2a1a10; --google-blue: #4285F4; }
+body { font-family: sans-serif; background: #000; color: #fff; margin: 0; display: flex; justify-content: center; }
 .app { width: 100%; max-width: 430px; min-height: 100vh; background: var(--white); display: flex; flex-direction: column; }
-.screen { display: none; flex-direction: column; flex: 1; }
+.screen { display: none; flex-direction: column; flex: 1; padding: 20px; }
 .screen.active { display: flex; }
-.container { padding: 20px; }
-.s1-header { background: var(--wood); padding: 20px 0; border-bottom: 4px solid var(--amber); text-align: center; color: var(--amber); }
-.reward-banner { background: #331100; border: 2px solid var(--amber); border-radius: 12px; padding: 16px; margin: 20px; color: #eee; }
-.ex-btn { background: #222; border: 1.5px solid #444; border-radius: 10px; padding: 12px 16px; font-size: 0.9rem; color: #ddd; width: 100%; text-align: left; margin-bottom: 8px; cursor: pointer; }
-.ex-btn.selected { border-color: var(--fire); background: #331100; }
-textarea { width: 100%; min-height: 120px; border-radius: 12px; padding: 14px; margin-bottom: 10px; }
-.submit-btn { background: var(--amber); color: #000; padding: 20px; border-radius: 50px; font-weight: 800; width: 100%; border: none; }
-.ticket-page { background: var(--smoke); color: #fff; padding: 40px; text-align: center; }
-.google-btn { background: var(--google-blue); color: #fff; padding: 18px; border-radius: 50px; font-weight: 700; width: 100%; border: none; margin-top: 20px; }
+.ex-btn { background: #333; border: 1px solid #555; color: #fff; padding: 15px; margin-bottom: 10px; width: 100%; border-radius: 8px; text-align: left; }
+textarea { width: 100%; height: 100px; border-radius: 8px; padding: 10px; margin-bottom: 20px; }
+.submit-btn, .google-btn { background: var(--amber); color: #000; padding: 20px; border-radius: 50px; font-weight: bold; width: 100%; border: none; }
+.google-btn { background: var(--google-blue); color: #fff; margin-top: 20px; }
 </style>
 </head>
 <body>
 <div class="app">
   <div class="screen active" id="screen1">
-    <div class="s1-header"><h2>たき火炉端 雨やどり</h2></div>
-    <div class="s1-body">
-      <div class="reward-banner"><strong>🎰 感想を書いて、ガチャ無料！</strong><br>豪華賞品が当たるガチャを1回プレゼント！</div>
-      <div class="container">
-        <div id="example-container"></div>
-        <textarea id="feedback" placeholder="ご感想を自由にお書きください"></textarea>
-        <button class="submit-btn" onclick="goToTicket()">感想を送ってガチャ券をもらう</button>
-      </div>
-    </div>
+    <h2>たき火炉端 雨やどり</h2>
+    <p>感想を書いてガチャ無料！</p>
+    <div id="examples"></div>
+    <textarea id="feedback" placeholder="ご感想を入力"></textarea>
+    <button class="submit-btn" onclick="next()">ガチャ券をもらう</button>
   </div>
-  <div class="screen ticket-page" id="screen2">
+  <div class="screen" id="screen2">
     <h2>🎰 ガチャ無料券</h2>
-    <p>スタッフに提示でガチャ1回無料！</p>
-    <button class="google-btn" onclick="goToGoogle()">Googleで応援して完了</button>
+    <p>スタッフにお見せください</p>
+    <button class="google-btn" onclick="window.location.href='https://search.google.com/local/writereview?placeid=ChIJeXMJxU8hdV8R5H1WEAt2Myc'">Googleで応援して完了</button>
   </div>
 </div>
 <script>
-  const itemExamples = [
-    { label: "🍶 料理もお酒も大満足", text: "料理もお酒も美味しくて大満足でした！また来ます🍶" },
-    { label: "😊 スタッフの対応が最高", text: "スタッフの皆さんの対応がとても良くて、居心地が最高でした😊" },
-    { label: "🔥 たき火の雰囲気が最高", text: "焚き火を眺めながら食事ができる雰囲気が最高で、とても癒される空間でした！" }
-  ];
-  function initExamples() {
-    const container = document.getElementById('example-container');
-    container.innerHTML = '';
-    itemExamples.sort(() => 0.5 - Math.random()).slice(0, 3).forEach(ex => {
-      const btn = document.createElement('button');
-      btn.className = 'ex-btn'; btn.textContent = ex.label;
-      btn.onclick = function() { document.getElementById('feedback').value = ex.text; document.querySelectorAll('.ex-btn').forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); };
-      container.appendChild(btn);
-    });
-  }
-  initExamples();
-  function goToTicket() { document.querySelectorAll('.screen')[0].classList.remove('active'); document.querySelectorAll('.screen')[1].classList.add('active'); }
-  
-  // ★ここにURLを貼り付けてください
-  function goToGoogle() { window.open('【雨やどりのGoogle口コミURL】', '_blank'); }
+  const texts = ["料理もお酒も最高でした！", "雰囲気が良くて癒やされました", "また絶対に来ます！"];
+  const cont = document.getElementById('examples');
+  texts.forEach(t => {
+    const b = document.createElement('button');
+    b.className = 'ex-btn'; b.textContent = t;
+    b.onclick = () => document.getElementById('feedback').value = t;
+    cont.appendChild(b);
+  });
+  function next() { document.getElementById('screen1').classList.remove('active'); document.getElementById('screen2').classList.add('active'); }
 </script>
 </body>
 </html>
