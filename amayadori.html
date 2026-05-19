@@ -161,7 +161,6 @@ textarea:focus { outline: none; border-color: var(--amber); background: #111; }
     });
   }
   
-  // 【修正】スマホで確実に表示させるため、そのまま実行します
   initExamples();
 
   function updateCount() { document.getElementById('charNum').textContent = document.getElementById('feedback').value.length; }
@@ -181,8 +180,8 @@ textarea:focus { outline: none; border-color: var(--amber); background: #111; }
     if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(textToCopy).then(() => { showToast('感想をコピーしました！'); setTimeout(() => showScreen('screen2'), 500); }).catch(err => { fallbackCopyTextToClipboard(textToCopy); }); } else { fallbackCopyTextToClipboard(textToCopy); } 
   }
   
-  /* 【重要】下記URLの「placeid=〇〇」を雨やどりのものに書き換えてください！ */
-  function goToGoogle() { window.open('https://search.google.com/local/writereview?placeid=【ここに雨やどりのGoogle口コミURLのplaceidを入れてください】', '_blank'); setTimeout(() => showScreen('screen3'), 2500); }
+  // 【修正】エラーにならないよう、Googleマップの検索URLに変更しました
+  function goToGoogle() { window.open('https://www.google.com/maps/search/?api=1&query=たき火炉端+雨やどり+千歳', '_blank'); setTimeout(() => showScreen('screen3'), 2500); }
   
   function goToDone() { showScreen('screen3'); }
   function showScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0, 0); }
