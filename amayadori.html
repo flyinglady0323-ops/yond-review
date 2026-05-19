@@ -180,8 +180,12 @@ textarea:focus { outline: none; border-color: var(--amber); background: #111; }
     if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(textToCopy).then(() => { showToast('感想をコピーしました！'); setTimeout(() => showScreen('screen2'), 500); }).catch(err => { fallbackCopyTextToClipboard(textToCopy); }); } else { fallbackCopyTextToClipboard(textToCopy); } 
   }
   
-  // 【修正】エラーにならないよう、Googleマップの検索URLに変更しました
-  function goToGoogle() { window.open('https://www.google.com/maps/search/?api=1&query=たき火炉端+雨やどり+千歳', '_blank'); setTimeout(() => showScreen('screen3'), 2500); }
+  // ★★★重要★★★：下の " " の中の文字を消して、雨やどりのGoogle口コミURLを貼り付けてください！
+  function goToGoogle() { 
+    const googleReviewUrl = "ここにGoogleの口コミリンクを貼り付けてください"; 
+    window.open(googleReviewUrl, '_blank'); 
+    setTimeout(() => showScreen('screen3'), 2500); 
+  }
   
   function goToDone() { showScreen('screen3'); }
   function showScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0, 0); }
