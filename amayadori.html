@@ -5,103 +5,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>たき火炉端 雨やどり｜ご感想でガチャ無料🎰</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
-:root { --fire: #cc3300; --amber: #ffaa00; --wood: #2a1100; --ink: #ffffff; --cream: #000000; --smoke: #1a0a00; --white: #2a1a10; --gray: #888; --google-blue: #4285F4; }
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body { font-family: 'Zen Kaku Gothic New', sans-serif; font-weight: 500; background: var(--cream); color: var(--ink); min-height: 100vh; display: flex; justify-content: center; line-height: 1.6; }
-.app { width: 100%; max-width: 430px; min-height: 100vh; background: var(--white); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 0 40px rgba(255,100,0,0.1); }
+:root { --fire: #cc3300; --amber: #ffaa00; --wood: #2a1100; --ink: #ffffff; --cream: #000000; --smoke: #1a0a00; --white: #2a1a10; --google-blue: #4285F4; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Zen Kaku Gothic New', sans-serif; background: var(--cream); color: var(--ink); display: flex; justify-content: center; }
+.app { width: 100%; max-width: 430px; min-height: 100vh; background: var(--white); display: flex; flex-direction: column; }
 .screen { display: none; flex-direction: column; flex: 1; }
-.screen.active { display: flex; animation: fadeUp 0.4s ease-out; }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.container { padding: 0 20px; } .b { font-weight: 700; }
-.s1-header { background: var(--wood); padding: 20px 0 0; position: relative; overflow: hidden; border-bottom: 4px solid var(--amber); }
-.header-top { padding: 0 20px; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
-.shop-badge { background: var(--fire); color: #fff; font-size: 0.65rem; letter-spacing: 0.1em; padding: 3px 12px; border-radius: 20px; font-weight: 700; border: 1px solid var(--amber); }
-.header-main { padding: 16px 20px 24px; text-align: center; position: relative; z-index: 1; }
-.shop-name-jp { font-size: 1.1rem; font-weight: 800; color: var(--amber); letter-spacing: 0.1em; line-height: 1.4; }
-.shop-name-jp span { font-size: 1.8rem; font-weight: 900; color: var(--white); display: block; margin-top: 2px; color: #fff; }
-.header-sub { color: #aaa; font-size: 0.75rem; margin-top: 6px; }
-.s1-body { padding: 24px 0 40px; flex: 1; display: flex; flex-direction: column; background: var(--smoke); }
-.reward-banner { margin: 0 16px 24px; background: linear-gradient(135deg, #331100, #1a0500); border: 2px solid var(--amber); border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 14px; position: relative; overflow: hidden; }
-.reward-icon { font-size: 2rem; flex-shrink: 0; }
-.reward-text { font-size: 0.82rem; line-height: 1.6; color: #eee; } .reward-text strong { color: var(--amber); font-size: 1rem; display: block; margin-bottom: 2px; }
-.section-label { font-size: 0.75rem; font-weight: 700; color: #aaa; margin-bottom: 10px; }
-.examples { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-.ex-btn { background: var(--white); border: 1.5px solid #444; border-radius: 10px; padding: 12px 36px 12px 16px; font-size: 0.85rem; color: #ddd; text-align: left; cursor: pointer; transition: all 0.1s ease; position: relative; width: 100%; font-family: 'Zen Kaku Gothic New', sans-serif;}
-.ex-btn::after { content: '↓'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--amber); }
-.ex-btn.selected { background: #331100; border-color: var(--fire); color: #fff; }
-.feedback-section { margin-bottom: 24px; }
-textarea { width: 100%; min-height: 120px; border: 2px solid #555; border-radius: 12px; padding: 14px; font-size: 0.95rem; resize: none; font-family: 'Zen Kaku Gothic New', sans-serif; color: #fff; background: var(--white); margin-bottom: 6px; }
-textarea:focus { outline: none; border-color: var(--amber); background: #111; }
-.char-count { font-size: 0.7rem; color: var(--gray); text-align: right; }
-.hint-box { background: rgba(255,170,0,0.1); border-left: 3px solid var(--amber); border-radius: 0 10px 10px 0; padding: 12px 16px; font-size: 0.8rem; color: #ffdd44; margin-bottom: 24px; }
-.submit-btn-wrap { position: sticky; bottom: 0; padding: 16px 20px; background: linear-gradient(to top, rgba(26,10,0,1), rgba(26,10,0,0)); margin-top: auto; }
-.submit-btn { background: linear-gradient(135deg, var(--amber), #cc8800); color: #000; border: none; padding: 20px; border-radius: 50px; font-size: 1.1rem; font-weight: 800; cursor: pointer; width: 100%; font-family: 'Zen Kaku Gothic New', sans-serif; box-shadow: 0 6px 20px rgba(255,170,0,0.2); }
-.ticket-page { background: var(--smoke); }
-.s2-header { background: var(--wood); padding: 16px 20px 14px; text-align: center; border-bottom: 3px solid var(--fire); }
-.s2-header p { color: var(--amber); font-size: 0.78rem; font-weight: 700; }
-.s2-header h2 { font-size: 1.4rem; color: #fff; margin-top: 4px; }
-.ticket { margin: 16px 16px 0; background: linear-gradient(145deg, #221100, #110500); border: 3px solid var(--amber); border-radius: 16px; padding: 20px; text-align: center; }
-.gacha-ticket { background: linear-gradient(135deg, #331100, #1a0500); border-radius: 12px; padding: 18px; margin-bottom: 14px; border: 1px solid var(--fire); }
-.gacha-icon { font-size: 2.8rem; margin-bottom: 4px; }
-.gacha-label { font-size: 1.15rem; font-weight: 800; color: var(--amber); }
-.gacha-free { display: inline-block; background: var(--fire); color: white; font-size: 0.8rem; font-weight: 700; padding: 3px 14px; border-radius: 20px; margin-top: 8px;}
-.ticket-valid { font-size: 0.75rem; color: var(--amber); font-weight: 700; margin-top:12px;}
-.google-section { margin: 16px; background: var(--white); border: 1.5px solid rgba(66,133,244,0.3); border-radius: 14px; padding: 20px; }
-.google-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-.google-icon { width: 20px; height: 20px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-.google-icon svg { width: 14px; height: 14px; } .google-title { font-size: 0.9rem; font-weight: 700; color: #fff; }
-.google-p { font-size: 0.8rem; color: #ccc; margin-bottom: 14px; }
-.step-guide { margin: 12px 0 16px; border-top: 1px solid #444; }
-.sg-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #444; } .sg-item:last-child { border-bottom: none; }
-.sg-num { width: 22px; height: 22px; border-radius: 50%; background: var(--google-blue); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
-.sg-text { font-size: 0.85rem; color: #ddd; }
-.policy-warning { background: rgba(255,100,100,0.1); border: 1px solid #cc0000; border-radius: 8px; padding: 12px; font-size: 0.75rem; color: #ff6666; margin-bottom: 16px; }
-.google-btn { background: var(--google-blue); color: white; border: none; padding: 18px; border-radius: 50px; font-size: 1rem; font-weight: 700; cursor: pointer; width: 100%; font-family: 'Zen Kaku Gothic New', sans-serif; display: flex; align-items: center; justify-content: center; gap: 10px; }
-.google-btn .google-icon-inbtn { width: 22px; height: 22px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 3px; }
-.skip-link { text-align: center; font-size: 0.75rem; color: #888; margin: 16px 16px 32px; cursor: pointer; text-decoration: underline; padding: 10px; }
-.s3-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 32px; text-align: center; background: var(--smoke); }
-.done-circle { width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, var(--amber) 0%, var(--fire) 100%); display: flex; align-items: center; justify-content: center; font-size: 3rem; margin-bottom: 24px; animation: fadeUp 0.6s ease; }
-.s3-wrap h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
-.s3-wrap p { font-size: 0.9rem; color: #ccc; line-height: 2; }
-.back-btn { margin-top: 40px; background: transparent; border: 2px solid var(--amber); color: var(--amber); padding: 14px 32px; border-radius: 50px; font-size: 0.95rem; font-weight: 700; cursor: pointer; }
-.toast { position: fixed; bottom: -60px; left: 50%; transform: translateX(-50%); background: rgba(255,170,0,0.9); color: #000; padding: 12px 24px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; z-index: 1000; opacity: 0; transition: bottom 0.3s ease, opacity 0.3s ease; }
-.toast.active { bottom: 30px; opacity: 1; }
+.screen.active { display: flex; }
+.container { padding: 20px; }
+.s1-header { background: var(--wood); padding: 20px 0; border-bottom: 4px solid var(--amber); text-align: center; color: var(--amber); }
+.reward-banner { background: #331100; border: 2px solid var(--amber); border-radius: 12px; padding: 16px; margin: 20px; color: #eee; }
+.ex-btn { background: #222; border: 1.5px solid #444; border-radius: 10px; padding: 12px 16px; font-size: 0.9rem; color: #ddd; width: 100%; text-align: left; margin-bottom: 8px; cursor: pointer; }
+.ex-btn.selected { border-color: var(--fire); background: #331100; }
+textarea { width: 100%; min-height: 120px; border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+.submit-btn { background: var(--amber); color: #000; padding: 20px; border-radius: 50px; font-weight: 800; width: 100%; border: none; }
+.ticket-page { background: var(--smoke); color: #fff; padding: 40px; text-align: center; }
+.google-btn { background: var(--google-blue); color: #fff; padding: 18px; border-radius: 50px; font-weight: 700; width: 100%; border: none; margin-top: 20px; }
 </style>
 </head>
 <body>
 <div class="app">
   <div class="screen active" id="screen1">
-    <div class="s1-header">
-      <div class="header-top">
-        <div class="shop-badge">炉端焼き / 千歳</div>
-      </div>
-      <div class="header-main">
-        <div class="shop-name-jp">たき火炉端<br><span>雨やどり</span></div>
-        <div class="header-sub">ご来店いただき、ありがとうございます🙏</div>
-      </div>
-    </div>
+    <div class="s1-header"><h2>たき火炉端 雨やどり</h2></div>
     <div class="s1-body">
-      <div class="reward-banner">
-        <div class="reward-icon">🎰</div>
-        <div class="reward-text"><strong>感想を書いて、ガチャ無料！</strong>豪華賞品が当たるガチャを1回プレゼントいたします🎁</div>
-      </div>
+      <div class="reward-banner"><strong>🎰 感想を書いて、ガチャ無料！</strong><br>豪華賞品が当たるガチャを1回プレゼント！</div>
       <div class="container">
-        <div class="section-label">👇 参考例をタップすると入力されます（ランダムで変わります）</div>
-        <div class="examples" id="example-container"></div>
-        <div class="feedback-section">
-          <div class="section-label">✏️ 今夜のご感想をお聞かせください</div>
-          <textarea id="feedback" placeholder="ご感想を自由にお書きください🐟" oninput="updateCount()"></textarea>
-          <div class="char-count"><span id="charNum">0</span>文字</div>
-        </div>
-        <div class="hint-box">📸 写真も大歓迎です！次のGoogle画面で添付してもらえると嬉しいです🙏</div>
+        <div id="example-container"></div>
+        <textarea id="feedback" placeholder="ご感想を自由にお書きください"></textarea>
+        <button class="submit-btn" onclick="goToTicket()">感想を送ってガチャ券をもらう</button>
       </div>
-      <div class="submit-btn-wrap"><button class="submit-btn" onclick="goToTicket()">感想を送ってガチャ券をもらう 🎰</button></div>
     </div>
   </div>
-
   <div class="screen ticket-page" id="screen2">
-    <div class="s2-header"><p>スタッフにこの画面をお見せください</p><h2>🎰 ガチャ無料券</h2></div>
-    <div class="ticket">
-      <div class="gacha-ticket">
-        <div class="gacha-icon">🎰<
+    <h2>🎰 ガチャ無料券</h2>
+    <p>スタッフに提示でガチャ1回無料！</p>
+    <button class="google-btn" onclick="goToGoogle()">Googleで応援して完了</button>
+  </div>
+</div>
+<script>
+  const itemExamples = [
+    { label: "🍶 料理もお酒も大満足", text: "料理もお酒も美味しくて大満足でした！また来ます🍶" },
+    { label: "😊 スタッフの対応が最高", text: "スタッフの皆さんの対応がとても良くて、居心地が最高でした😊" },
+    { label: "🔥 たき火の雰囲気が最高", text: "焚き火を眺めながら食事ができる雰囲気が最高で、とても癒される空間でした！" }
+  ];
+  function initExamples() {
+    const container = document.getElementById('example-container');
+    container.innerHTML = '';
+    itemExamples.sort(() => 0.5 - Math.random()).slice(0, 3).forEach(ex => {
+      const btn = document.createElement('button');
+      btn.className = 'ex-btn'; btn.textContent = ex.label;
+      btn.onclick = function() { document.getElementById('feedback').value = ex.text; document.querySelectorAll('.ex-btn').forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); };
+      container.appendChild(btn);
+    });
+  }
+  initExamples();
+  function goToTicket() { document.querySelectorAll('.screen')[0].classList.remove('active'); document.querySelectorAll('.screen')[1].classList.add('active'); }
+  
+  // ★ここにURLを貼り付けてください
+  function goToGoogle() { window.open('【雨やどりのGoogle口コミURL】', '_blank'); }
+</script>
+</body>
+</html>
