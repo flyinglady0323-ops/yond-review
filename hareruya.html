@@ -3,192 +3,72 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>酒とアテ 晴れる屋｜ご感想で素敵な特典プレゼント🎁</title>
+<title>酒とアテ 晴れる屋｜ご感想で特典プレゼント🎁</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
-:root { --fire: #e65c00; --amber: #ffcc00; --wood: #111111; --ink: #ffffff; --cream: #000000; --smoke: #1a1a1a; --white: #2a2a2a; --gray: #888; --google-blue: #4285F4; }
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
+/* 晴れる屋専用カラー：ネイビー・白・和風 */
+:root { --primary: #0a1b3f; --primary-l: #1e3a8a; --accent: #c5a059; --accent-l: #e6c587; --bg-body: #f8f9fa; --bg-app: #ffffff; --text-main: #1e293b; --text-sub: #64748b; --border: #e2e8f0; --google-blue: #4285F4; }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body { font-family: 'Zen Kaku Gothic New', sans-serif; font-weight: 500; background: var(--cream); color: var(--ink); min-height: 100vh; display: flex; justify-content: center; line-height: 1.6; }
-.app { width: 100%; max-width: 430px; min-height: 100vh; background: var(--white); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 0 40px rgba(230,92,0,0.1); }
+body { font-family: 'Noto Serif JP', serif; font-weight: 600; background: var(--bg-body); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; line-height: 1.6; }
+.app { width: 100%; max-width: 430px; min-height: 100vh; background: var(--bg-app); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 0 40px rgba(10,27,63,0.1); }
 .screen { display: none; flex-direction: column; flex: 1; }
 .screen.active { display: flex; animation: fadeUp 0.4s ease-out; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .container { padding: 0 20px; } .b { font-weight: 700; }
-.s1-header { background: var(--wood); padding: 20px 0 0; position: relative; overflow: hidden; border-bottom: 4px solid var(--amber); }
-.header-top { padding: 0 20px; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
-.shop-badge { background: var(--fire); color: #fff; font-size: 0.65rem; letter-spacing: 0.1em; padding: 3px 12px; border-radius: 20px; font-weight: 700; border: 1px solid var(--amber); }
-.header-main { padding: 16px 20px 24px; text-align: center; position: relative; z-index: 1; }
-.shop-name-jp { font-size: 1.1rem; font-weight: 800; color: var(--amber); letter-spacing: 0.1em; line-height: 1.4; }
-.shop-name-jp span { font-size: 1.8rem; font-weight: 900; color: var(--white); display: block; margin-top: 2px; color: #fff; }
-.header-sub { color: #aaa; font-size: 0.75rem; margin-top: 6px; }
-.s1-body { padding: 24px 0 40px; flex: 1; display: flex; flex-direction: column; background: var(--smoke); }
-.reward-banner { margin: 0 16px 24px; background: linear-gradient(135deg, #331a00, #1a0d00); border: 2px solid var(--amber); border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 14px; position: relative; overflow: hidden; }
-.reward-icon { font-size: 2rem; flex-shrink: 0; }
-.reward-text { font-size: 0.82rem; line-height: 1.6; color: #eee; } .reward-text strong { color: var(--amber); font-size: 1rem; display: block; margin-bottom: 2px; }
-.section-label { font-size: 0.75rem; font-weight: 700; color: #aaa; margin-bottom: 10px; }
+.s1-header { background: var(--primary); padding: 24px 0 0; position: relative; overflow: hidden; }
+.s1-header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 12px; background: repeating-radial-gradient(circle at 10px 12px, transparent 0, transparent 8px, rgba(255,255,255,0.2) 9px, rgba(255,255,255,0.2) 10px) 0 0/20px 12px; }
+.shop-badge { background: transparent; border: 1px solid var(--accent-l); color: var(--accent-l); font-size: 0.7rem; letter-spacing: 0.15em; padding: 4px 16px; border-radius: 20px; display: inline-block; margin-bottom: 12px; }
+.header-main { padding: 0 20px 32px; text-align: center; position: relative; z-index: 1; }
+.shop-name-jp { font-size: 1.2rem; font-weight: 700; color: var(--accent-l); letter-spacing: 0.15em; line-height: 1.4; }
+.shop-name-jp span { font-size: 1.8rem; font-weight: 800; color: #fff; display: block; letter-spacing: 0.08em; margin-top: 4px; }
+.header-sub { color: rgba(255,255,255,0.8); font-size: 0.8rem; margin-top: 8px; letter-spacing: 0.05em; font-family: 'Zen Kaku Gothic New', sans-serif;}
+.s1-body { padding: 24px 0 40px; flex: 1; display: flex; flex-direction: column; font-family: 'Zen Kaku Gothic New', sans-serif;}
+.reward-banner { margin: 0 16px 24px; background: #fff; border: 2px solid var(--primary); border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 14px; position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(10,27,63,0.08); }
+.reward-banner::before { content: '🎁'; position: absolute; right: -10px; bottom: -10px; font-size: 3.5rem; opacity: 0.05; }
+.reward-icon { font-size: 2.2rem; flex-shrink: 0; line-height: 1;}
+.reward-text { font-size: 0.82rem; line-height: 1.6; color: var(--text-main); } .reward-text strong { color: var(--primary); font-size: 0.95rem; display: block; margin-bottom: 4px; }
+.section-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; color: var(--primary); margin-bottom: 12px; text-align: center; }
 .examples { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-.ex-btn { background: var(--white); border: 1.5px solid #444; border-radius: 10px; padding: 12px 36px 12px 16px; font-size: 0.85rem; color: #ddd; text-align: left; cursor: pointer; transition: all 0.1s ease; position: relative; width: 100%; font-family: 'Zen Kaku Gothic New', sans-serif;}
-.ex-btn::after { content: '↓'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--amber); }
-.ex-btn.selected { background: #331a00; border-color: var(--fire); color: #fff; }
+.ex-btn { background: var(--bg-body); border: 1px solid var(--border); border-radius: 10px; padding: 12px 36px 12px 16px; font-size: 0.85rem; line-height: 1.6; color: var(--text-main); text-align: left; cursor: pointer; font-family: 'Zen Kaku Gothic New', sans-serif; transition: all 0.1s ease; position: relative; }
+.ex-btn::after { content: '↓'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--accent); font-weight: 700; opacity: 0.7; }
+.ex-btn:active, .ex-btn.selected { background: #f0f4f8; border-color: var(--primary); color: var(--primary); font-weight: 700;}
 .feedback-section { margin-bottom: 24px; }
-textarea { width: 100%; min-height: 120px; border: 2px solid #555; border-radius: 12px; padding: 14px; font-size: 0.95rem; resize: none; font-family: 'Zen Kaku Gothic New', sans-serif; color: #fff; background: var(--white); margin-bottom: 6px; }
-textarea:focus { outline: none; border-color: var(--amber); background: #111; }
-.char-count { font-size: 0.7rem; color: var(--gray); text-align: right; }
-.hint-box { background: rgba(255,204,0,0.1); border-left: 3px solid var(--amber); border-radius: 0 10px 10px 0; padding: 12px 16px; font-size: 0.8rem; color: #ffdd44; margin-bottom: 24px; }
-.submit-btn-wrap { position: sticky; bottom: 0; padding: 16px 20px; background: linear-gradient(to top, rgba(26,26,26,1), rgba(26,26,26,0)); margin-top: auto; }
-.submit-btn { background: linear-gradient(135deg, var(--amber), #e69900); color: #000; border: none; padding: 20px; border-radius: 50px; font-size: 1.1rem; font-weight: 800; cursor: pointer; width: 100%; font-family: 'Zen Kaku Gothic New', sans-serif; box-shadow: 0 6px 20px rgba(255,204,0,0.2); }
-.ticket-page { background: var(--smoke); }
-.s2-header { background: var(--wood); padding: 16px 20px 14px; text-align: center; border-bottom: 3px solid var(--fire); }
-.s2-header p { color: var(--amber); font-size: 0.78rem; font-weight: 700; }
-.s2-header h2 { font-size: 1.4rem; color: #fff; margin-top: 4px; }
-.ticket { margin: 16px 16px 0; background: linear-gradient(145deg, #222, #111); border: 3px solid var(--amber); border-radius: 16px; padding: 20px; text-align: center; }
-.gacha-ticket { background: linear-gradient(135deg, #331a00, #1a0d00); border-radius: 12px; padding: 18px; margin-bottom: 14px; border: 1px solid var(--fire); }
-.gacha-icon { font-size: 2.8rem; margin-bottom: 4px; }
-.gacha-label { font-size: 1.15rem; font-weight: 800; color: var(--amber); }
-.gacha-free { display: inline-block; background: var(--fire); color: white; font-size: 0.8rem; font-weight: 700; padding: 3px 14px; border-radius: 20px; margin-top: 8px;}
-.ticket-valid { font-size: 0.75rem; color: var(--amber); font-weight: 700; margin-top:12px;}
-.google-section { margin: 16px; background: var(--white); border: 1.5px solid rgba(66,133,244,0.3); border-radius: 14px; padding: 20px; }
+textarea { width: 100%; min-height: 120px; border: 2px solid var(--border); border-radius: 12px; padding: 14px; font-size: 0.95rem; resize: none; font-family: 'Zen Kaku Gothic New', sans-serif; line-height: 1.7; color: var(--text-main); background: var(--bg-body); transition: all 0.2s; margin-bottom: 6px; }
+textarea:focus { outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 10px rgba(10,27,63,0.1); }
+.char-count { font-size: 0.7rem; color: var(--text-sub); text-align: right; padding-right: 4px; }
+.hint-box { background: rgba(10,27,63,0.03); border-left: 3px solid var(--primary); border-radius: 0 10px 10px 0; padding: 12px 16px; font-size: 0.8rem; line-height: 1.7; color: var(--primary); margin-bottom: 24px; }
+.submit-btn-wrap { position: sticky; bottom: 0; padding: 16px 20px; background: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0)); margin-top: auto; }
+.submit-btn { background: var(--primary); color: white; border: none; padding: 20px; border-radius: 50px; font-size: 1.05rem; font-weight: 700; cursor: pointer; width: 100%; font-family: 'Noto Serif JP', serif; box-shadow: 0 6px 20px rgba(10,27,63,0.25); transition: transform 0.1s; letter-spacing: 0.05em; }
+.submit-btn:active { transform: translateY(2px) scale(0.98); }
+.ticket-page { background: var(--bg-body); font-family: 'Zen Kaku Gothic New', sans-serif;}
+.s2-header { background: var(--primary); padding: 20px 20px 16px; text-align: center; }
+.s2-header p { color: var(--accent-l); font-size: 0.8rem; letter-spacing: 0.1em; font-weight: 700; }
+.s2-header h2 { font-family: 'Noto Serif JP', serif; font-size: 1.5rem; color: #fff; margin-top: 6px; letter-spacing: 0.05em;}
+.ticket { margin: 20px 16px 0; background: #fff; border: 2px solid var(--primary); border-radius: 16px; padding: 20px; text-align: center; position: relative; box-shadow: 0 5px 25px rgba(10,27,63,0.08); }
+.ticket-top { font-size: 0.75rem; font-weight: 700; color: var(--primary); margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.ticket-top::before, .ticket-top::after { content: ''; flex: 1; height: 1px; background: var(--primary); opacity: 0.2;}
+.gacha-ticket { background: var(--primary); border-radius: 12px; padding: 20px 16px; margin-bottom: 16px; color: #fff; box-shadow: 0 4px 15px rgba(10,27,63,0.2); }
+.gacha-icon { font-size: 3rem; margin-bottom: 8px; display: flex; justify-content: center; gap: 10px;}
+.gacha-label { font-family: 'Noto Serif JP', serif; font-size: 1.3rem; font-weight: 800; color: var(--accent-l); letter-spacing: 0.05em; line-height: 1.4; margin-bottom: 8px;}
+.gacha-sub { font-size: 0.8rem; color: #e2e8f0; line-height: 1.5; }
+.gacha-free { display: inline-block; background: var(--accent); color: #fff; font-size: 0.85rem; font-weight: 700; padding: 4px 16px; border-radius: 20px; margin-top: 8px;}
+.ticket-valid { font-size: 0.8rem; color: var(--primary); font-weight: 700; margin-top: 12px; font-family: 'Noto Serif JP', serif;}
+.google-section { margin: 16px; background: #fff; border: 1.5px solid rgba(66,133,244,0.2); border-radius: 14px; padding: 20px; }
 .google-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-.google-icon { width: 20px; height: 20px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-.google-icon svg { width: 14px; height: 14px; } .google-title { font-size: 0.9rem; font-weight: 700; color: #fff; }
-.google-p { font-size: 0.8rem; color: #ccc; margin-bottom: 14px; }
-.step-guide { margin: 12px 0 16px; border-top: 1px solid #444; }
-.sg-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #444; } .sg-item:last-child { border-bottom: none; }
-.sg-num { width: 22px; height: 22px; border-radius: 50%; background: var(--google-blue); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
-.sg-text { font-size: 0.85rem; color: #ddd; }
-.policy-warning { background: rgba(255,100,100,0.1); border: 1px solid #cc0000; border-radius: 8px; padding: 12px; font-size: 0.75rem; color: #ff6666; margin-bottom: 16px; }
+.google-icon { width: 20px; height: 20px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.google-icon svg { width: 14px; height: 14px; } .google-title { font-size: 0.95rem; font-weight: 700; color: #1a3a5c; }
+.google-p { font-size: 0.8rem; color: var(--text-sub); line-height: 1.6; margin-bottom: 16px; }
+.step-guide { margin: 12px 0 16px; border-top: 1px solid var(--border); }
+.sg-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); } .sg-item:last-child { border-bottom: none; }
+.sg-num { width: 22px; height: 22px; border-radius: 50%; background: var(--google-blue); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.sg-text { font-size: 0.85rem; line-height: 1.6; color: var(--text-main); }
+.sg-tag { display: inline-block; background: rgba(66,133,244,0.08); color: var(--google-blue); font-size: 0.65rem; padding: 1px 7px; border-radius: 10px; font-weight: 700; margin-left: 5px; }
+.policy-warning { background: #fff5f5; border: 1px solid #feb2b2; border-radius: 8px; padding: 12px; font-size: 0.75rem; color: #c53030; margin-bottom: 16px; line-height: 1.5; }
 .google-btn { background: var(--google-blue); color: white; border: none; padding: 18px; border-radius: 50px; font-size: 1rem; font-weight: 700; cursor: pointer; width: 100%; font-family: 'Zen Kaku Gothic New', sans-serif; display: flex; align-items: center; justify-content: center; gap: 10px; }
 .google-btn .google-icon-inbtn { width: 22px; height: 22px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 3px; }
-.skip-link { text-align: center; font-size: 0.75rem; color: #888; margin: 16px 16px 32px; cursor: pointer; text-decoration: underline; padding: 10px; }
-.s3-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 32px; text-align: center; background: var(--smoke); }
-.done-circle { width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, var(--amber) 0%, var(--fire) 100%); display: flex; align-items: center; justify-content: center; font-size: 3rem; margin-bottom: 24px; animation: fadeUp 0.6s ease; }
-.s3-wrap h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
-.s3-wrap p { font-size: 0.9rem; color: #ccc; line-height: 2; }
-.back-btn { margin-top: 40px; background: transparent; border: 2px solid var(--amber); color: var(--amber); padding: 14px 32px; border-radius: 50px; font-size: 0.95rem; font-weight: 700; cursor: pointer; }
-.toast { position: fixed; bottom: -60px; left: 50%; transform: translateX(-50%); background: rgba(255,204,0,0.9); color: #000; padding: 12px 24px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; z-index: 1000; opacity: 0; transition: bottom 0.3s ease, opacity 0.3s ease; }
-.toast.active { bottom: 30px; opacity: 1; }
-</style>
-</head>
-<body>
-<div class="app">
-  <div class="screen active" id="screen1">
-    <div class="s1-header">
-      <div class="header-top">
-        <div class="shop-badge">居酒屋 / 千歳</div>
-      </div>
-      <div class="header-main">
-        <div class="shop-name-jp">酒とアテ<br><span>晴れる屋</span></div>
-        <div class="header-sub">ご来店いただき、ありがとうございます🙏</div>
-      </div>
-    </div>
-    <div class="s1-body">
-      <div class="reward-banner">
-        <div class="reward-icon">🎁</div>
-        <div class="reward-text"><strong>感想を書いて、選べる特典！</strong>A：プレミアムハイボール🥃<br>B：アイスクリーム🍨</div>
-      </div>
-      <div class="container">
-        <div class="section-label">👇 参考例をタップすると入力されます（ランダムで変わります）</div>
-        <div class="examples" id="example-container"></div>
-        <div class="feedback-section">
-          <div class="section-label">✏️ 今夜のご感想をお聞かせください</div>
-          <textarea id="feedback" placeholder="ご感想を自由にお書きください🍶" oninput="updateCount()"></textarea>
-          <div class="char-count"><span id="charNum">0</span>文字</div>
-        </div>
-        <div class="hint-box">📸 写真も大歓迎です！次のGoogle画面で添付してもらえると嬉しいです🙏</div>
-      </div>
-      <div class="submit-btn-wrap"><button class="submit-btn" onclick="goToTicket()">感想を送って特典をもらう 🎁</button></div>
-    </div>
-  </div>
-
-  <div class="screen ticket-page" id="screen2">
-    <div class="s2-header"><p>スタッフにこの画面をお見せください</p><h2>🎁 特典チケット</h2></div>
-    <div class="ticket">
-      <div class="gacha-ticket">
-        <div class="gacha-icon">🎁</div><div class="gacha-label">晴れる屋<br>特典チケット</div>
-        <div class="gacha-free">A:ハイボール または B:アイス</div>
-      </div>
-      <div class="ticket-valid">✅ 本日限り有効　酒とアテ 晴れる屋</div>
-    </div>
-    <div class="google-section">
-      <div class="google-header">
-        <div class="google-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/><path d="M1 1h22v22H1z" fill="none"/></svg></div>
-        <div class="google-title">Googleにも温かい応援を！</div>
-      </div>
-      <div class="google-p">今のご感想は<span class="b">コピー済み</span>です。<br>下のボタンから貼り付けだけで完了します！</div>
-      <div class="policy-warning">⚠️ Googleのシステム上、口コミ内に「特典」等の記載があると反映されません。純粋なご感想のみでお願いいたします。</div>
-      <button class="google-btn" onclick="goToGoogle()"><div class="google-icon-inbtn"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/><path d="M1 1h22v22H1z" fill="none"/></svg></div>貼り付けて応援する</button>
-    </div>
-    <div class="skip-link" onclick="goToDone()">応援はスキップして完了する</div>
-  </div>
-
-  <div class="screen" id="screen3">
-    <div class="s3-wrap">
-      <div class="done-circle">🙏</div><h2>ありがとうございます！</h2>
-      <p>お客様からの一言が活力になります😊<br><br>またのご来店を<br>心よりお待ちしております🔥</p>
-      <button class="back-btn" onclick="resetApp()">最初に戻る</button>
-    </div>
-  </div>
-</div>
-<div class="toast" id="toast">感想をコピーしました！</div>
-
-<script>
-  const itemExamples = [
-    { label: "🍶 料理もお酒も大満足", text: "料理もお酒も美味しくて大満足でした！また来ます🍶" },
-    { label: "😊 スタッフの対応が最高", text: "スタッフの皆さんの対応がとても良くて、居心地が最高でした😊" },
-    { label: "🎉 絶対にまたリピートしたい", text: "素敵なお店に出会えて嬉しいです！絶対にまた来たいと思います🎉" },
-    { label: "🔥 おつまみのクオリティが高い", text: "活気のある雰囲気で居心地が良く、おつまみも全部美味しかったです🔥" },
-    { label: "✨ お気に入りのお店になった", text: "お店の雰囲気が素敵で大満足！千歳でおすすめしたいお気に入りのお店です✨" },
-    { label: "🍶 日本酒とアテの相性が抜群", text: "美味しいお酒とそれに合うこだわりのアテ（おつまみ）が豊富で、本当にお酒が進みました！" },
-    { label: "👏 美味しいおつまみに大満足", text: "リーズナブルで美味しいアテがたくさん揃っていて、大満足の夜になりました👏" },
-    { label: "🏠 居心地が良くて通いたくなる", text: "アットホームで居心地が良いので、仕事帰りや普段使いにもぴったりな通いたくなるお店です！" },
-    { label: "🍻 ドリンクが進む絶品フード", text: "名物の料理をはじめ、頼んだフードがどれも絶品で本当にお酒が進みました🍻" },
-    { label: "💬 友人にもおすすめしたい", text: "賑やかな雰囲気で活気があり、友人や同僚を連れてまた遊びに来たいお店です！" },
-    { label: "🎯 メニューが豊富で楽しい", text: "おつまみのメニューが豊富でどれを頼むか迷う楽しさがあります。味も最高でした！" },
-    { label: "🌟 初めてでもめちゃくちゃ楽しめる", text: "初めて入りましたが、お店のスタッフさんが温かく迎えてくれてファンになりました🌟" }
-  ];
-
-  function initExamples() {
-    const container = document.getElementById('example-container');
-    if(!container) return;
-    container.innerHTML = '';
-    const shuffled = [...itemExamples].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 3);
-    selected.forEach(ex => {
-      const btn = document.createElement('button');
-      btn.className = 'ex-btn'; btn.textContent = ex.label;
-      btn.onclick = function() { setExample(this, ex.text); };
-      container.appendChild(btn);
-    });
-  }
-  
-  // 【修正】スマホで確実に表示させるため、そのまま実行します
-  initExamples();
-
-  function updateCount() { document.getElementById('charNum').textContent = document.getElementById('feedback').value.length; }
-  function setExample(btn, text) { document.querySelectorAll('.ex-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); const ta = document.getElementById('feedback'); ta.value = text; updateCount(); ta.scrollIntoView({ behavior: 'smooth', block: 'center' }); showToast('入力欄にセットしました！修正もOKです。'); setTimeout(() => ta.focus(), 300); }
-  
-  function goToTicket() { 
-    const text = document.getElementById('feedback').value.trim(); 
-    if (!text) { alert('ぜひ一言ご感想をお願いします！\n参考例をタップするだけでもOKです😊'); return; }
-    
-    const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSeMo0frNZmkOctIGc8jKGOPsbvwiFJocAgBih2jwy--19J36Q/formResponse';
-    const formData = new FormData();
-    formData.append('entry.1794258647', '晴れる屋'); 
-    formData.append('entry.396516299', text); 
-    fetch(formUrl, { method: 'POST', mode: 'no-cors', body: formData }).catch(e => console.error(e));
-
-    const textToCopy = text + "\n#晴れる屋 #酒とアテ";
-    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(textToCopy).then(() => { showToast('感想をコピーしました！'); setTimeout(() => showScreen('screen2'), 500); }).catch(err => { fallbackCopyTextToClipboard(textToCopy); }); } else { fallbackCopyTextToClipboard(textToCopy); } 
-  }
-  
-  /* 【重要】下記URLの「placeid=〇〇」を晴れる屋のものに書き換えてください！ */
-  function goToGoogle() { window.open('https://search.google.com/local/writereview?placeid=【ここに晴れる屋のGoogle口コミURLのplaceidを入れてください】', '_blank'); setTimeout(() => showScreen('screen3'), 2500); }
-  
-  function goToDone() { showScreen('screen3'); }
-  function showScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0, 0); }
-  function resetApp() { document.getElementById('feedback').value = ''; updateCount(); initExamples(); document.querySelectorAll('.ex-btn').forEach(b => b.classList.remove('selected')); showScreen('screen1'); }
-  function showToast(message) { const t = document.getElementById('toast'); t.textContent = message; t.classList.add('active'); setTimeout(() => t.classList.remove('active'), 2500); }
-  function fallbackCopyTextToClipboard(text) { const ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0;'; document.body.appendChild(ta); ta.select(); try { const successful = document.execCommand('copy'); if (successful) { showToast('感想をコピーしました！'); setTimeout(() => showScreen('screen2'), 500); } else { showScreen('screen2'); } } catch (e) { showScreen('screen2'); } document.body.removeChild(ta); }
-</script>
-</body>
-</html>
+.skip-link { text-align: center; font-size: 0.8rem; color: var(--text-sub); margin: 16px 16px 32px; cursor: pointer; text-decoration: underline; padding: 10px; }
+.s3-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 32px; text-align: center; }
+.done-circle { width: 100px; height: 100px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 3rem; margin-bottom: 24px; box-shadow: 0 8px 30px rgba(10,27,63,0.2); animation: fadeUp 0.6s ease; color: #fff;}
+.s3-wrap h2 { font-size: 1.6rem; font-weight: 700; color: var(--primary); margin-bottom: 16px; }
+.s3-wrap p { font-size: 0.95rem; color: var(--text-sub); line-height: 2; font-family: 'Zen Kaku Gothic New', sans-serif;}
+.back-btn { margin-top: 40px; background: #fff; border: 2px solid var(
