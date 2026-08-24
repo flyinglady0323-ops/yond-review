@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>たき火炉端 雨やどり｜ランチアンケート</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
+
+:root {
+  --sun: #ff9a3c;
+  --clay: #d9531e;
+  --wood: #3a2415;
+  --ink: #2a1a10;
+  --cream: #fff8ef;
+  --paper: #fffaf3;
+  --line: #e8d9c6;
+  --gray: #9a8a78;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: 'Zen Kaku Gothic New', sans-serif; font-weight: 500;
+  background: var(--cream); color: var(--ink); min-height: 100vh;
+  display: flex; justify-content: center; line-height: 1.7;
+}
+.app { width: 100%; max-width: 430px; min-height: 100vh; background: var(--paper); display: flex; flex-direction: column; overflow: hidden; }
+.screen { display: none; flex-direction: column; flex: 1; }
+.screen.active { display: flex; animation: fadeUp 0.4s ease-out; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.container { padding: 0 22px; }
+
+/* header */
+.header {
+  background: var(--wood); padding: 28px 22px 26px; position: relative; overflow: hidden;
+  border-bottom: 4px solid var(--sun);
+}
+.header::before {
+  content: ''; position: absolute; right: -30px; top: -30px; width: 140px; height: 140px;
+  background: radial-gradient(circle, rgba(255,154,60,0.25), transparent 70%); border-radius: 50%;
+}
+.eyebrow { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--sun); font-weight: 700; }
+.shop-name { font-family: 'Noto Serif JP', serif; font-size: 1.5rem; font-weight: 800; color: #fff; margin-top: 8px; letter-spacing: 0.03em; }
+.shop-sub { font-size: 0.78rem; color: #cbb8a4; margin-top: 6px; }
+
+/* intro */
+.intro { padding: 22px 22px 6px; }
+.intro p { font-size: 0.85rem; color: #6b5a48; }
+.intro strong { color: var(--clay); }
+
+/* progress */
+.progress-wrap { padding: 18px 22px 4px; display: flex; gap: 6px; }
+.progress-dot { height: 4px; flex: 1; border-radius: 4px; background: var(--line); }
+.progress-dot.done { background: var(--sun); }
+
+/* question block */
+.q-block { padding: 26px 22px; }
+.q-num { font-family: 'Noto Serif JP', serif; font-size: 0.75rem; color: var(--sun); font-weight: 700; margin-bottom: 6px; }
+.q-title { font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 18px; }
+
+/* rating scale */
+.scale { display: flex; gap: 8px; justify-content: space-between; }
+.scale-btn {
+  flex: 1; aspect-ratio: 1; border-radius: 14px; border: 1.5px solid var(--line); background: #fff;
+  font-size: 1.4rem; display: flex; align-items: center; justify-content: center; cursor: pointer;
+  transition: transform 0.1s ease, border-color 0.15s ease, background 0.15s ease;
+  -webkit-appearance: none; appearance: none; touch-action: manipulation; padding: 0; font-family: inherit;
+}
+.scale-btn.selected { border-color: var(--clay); background: #fff1e4; transform: scale(1.06); }
+.scale-labels { display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.68rem; color: var(--gray); }
+
+/* choice chips */
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: 1.5px solid var(--line); background: #fff; border-radius: 20px; padding: 10px 16px;
+  font-size: 0.82rem; color: #6b5a48; cursor: pointer; font-family: 'Zen Kaku Gothic New', sans-serif;
+  -webkit-appearance: none; appearance: none; touch-action: manipulation;
+}
+.chip.selected { background: var(--clay); border-color: var(--clay); color: #fff; }
+
+/* textarea */
+textarea {
+  width: 100%; min-height: 110px; border: 1.5px solid var(--line); border-radius: 12px; padding: 14px;
+  font-size: 0.92rem; resize: none; font-family: 'Zen Kaku Gothic New', sans-serif; color: var(--ink);
+  background: #fff;
+}
+textarea::placeholder { color: #b8a894; }
+textarea:focus { outline: none; border-color: var(--sun); }
+.optional-tag { font-size: 0.68rem; color: var(--gray); margin-bottom: 8px; }
+
+/* nav buttons */
+.nav-row { display: flex; gap: 10px; padding: 8px 22px 28px; margin-top: auto; }
+.btn {
+  flex: 1; padding: 16px; border-radius: 50px; font-size: 0.95rem; font-weight: 700; cursor: pointer;
+  font-family: 'Zen Kaku Gothic New', sans-serif; border: none; touch-action: manipulation;
+}
+.btn-primary { background: var(--clay); color: #fff; }
+.btn-primary:disabled { background: #e3cdb8; color: #fff; cursor: not-allowed; }
+.btn-ghost { background: transparent; border: 1.5px solid var(--line); color: #6b5a48; flex: 0 0 92px; }
+
+/* done screen */
+.done-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 32px; text-align: center; }
+.done-mark {
+  width: 84px; height: 84px; border-radius: 50%; background: radial-gradient(circle, var(--sun), var(--clay));
+  display: flex; align-items: center; justify-content: center; font-size: 2.4rem; margin-bottom: 22px; color: #fff;
+}
+.done-wrap h2 { font-family: 'Noto Serif JP', serif; font-size: 1.3rem; color: var(--ink); margin-bottom: 12px; }
+.done-wrap p { font-size: 0.85rem; color: #6b5a48; line-height: 1.9; }
+.back-btn {
+  margin-top: 36px; background: transparent; border: 1.5px solid var(--clay); color: var(--clay);
+  padding: 13px 30px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+  font-family: 'Zen Kaku Gothic New', sans-serif; touch-action: manipulation;
+}
+.review-optional {
+  margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--line); width: 100%;
+}
+.review-optional .optional-tag { justify-content: center; display: flex; margin-bottom: 10px; }
+.review-link {
+  display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+  color: #6b5a48; font-size: 0.82rem; border: 1.5px solid var(--line); border-radius: 50px;
+  padding: 11px 20px; background: #fff; font-family: 'Zen Kaku Gothic New', sans-serif;
+}
+.review-link:active { background: #fff1e4; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- SCREEN 1: intro + Q1 satisfaction -->
+  <div class="screen active" id="screen-1">
+    <div class="header">
+      <div class="eyebrow">たき火炉端 / 千歳</div>
+      <div class="shop-name">雨やどり ランチアンケート</div>
+      <div class="shop-sub">3分ほどで終わります。今日のランチはいかがでしたか？</div>
+    </div>
+    <div class="intro">
+      <p>いただいたお声は、これからのメニューやサービスの改善に<strong>そのまま</strong>活用させていただきます。</p>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-dot done"></div><div class="progress-dot"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-num">Q1</div>
+      <div class="q-title">総合的な満足度を教えてください</div>
+      <div class="scale" id="q1-scale">
+        <button type="button" class="scale-btn" data-v="1">😞</button>
+        <button type="button" class="scale-btn" data-v="2">🙁</button>
+        <button type="button" class="scale-btn" data-v="3">😐</button>
+        <button type="button" class="scale-btn" data-v="4">🙂</button>
+        <button type="button" class="scale-btn" data-v="5">😄</button>
+      </div>
+      <div class="scale-labels"><span>不満</span><span>大満足</span></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-primary" id="s1-next" disabled onclick="goTo(2)">次へ</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: Q2 taste, Q3 wait time -->
+  <div class="screen" id="screen-2">
+    <div class="header">
+      <div class="eyebrow">たき火炉端 / 千歳</div>
+      <div class="shop-name">雨やどり ランチアンケート</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-dot done"></div><div class="progress-dot done"></div>
+    </div>
+    <div class="q-block">
+      <div class="q-num">Q2</div>
+      <div class="q-title">お料理の味について</div>
+      <div class="chip-row" id="q2-chips">
+        <button type="button" class="chip" data-v="美味しかった">美味しかった</button>
+        <button type="button" class="chip" data-v="ちょうど良かった">ちょうど良かった</button>
+        <button type="button" class="chip" data-v="もう少し工夫がほしい">もう少し工夫がほしい</button>
+        <button type="button" class="chip" data-v="口に合わなかった">口に合わなかった</button>
+      </div>
+    </div>
+    <div class="q-block" style="padding-top:0;">
+      <div class="q-num">Q3</div>
+      <div class="q-title">提供までの待ち時間は？</div>
+      <div class="chip-row" id="q3-chips">
+        <button type="button" class="chip" data-v="早かった">早かった</button>
+        <button type="button" class="chip" data-v="ちょうど良い">ちょうど良い</button>
+        <button type="button" class="chip" data-v="やや長い">やや長い</button>
+        <button type="button" class="chip" data-v="長すぎる">長すぎる</button>
+      </div>
+    </div>
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="goTo(1)">戻る</button>
+      <button class="btn btn-primary" id="s2-next" disabled onclick="submitSurvey()">送信する</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: done -->
+  <div class="screen" id="screen-3">
+    <div class="done-wrap">
+      <div class="done-mark">🙏</div>
+      <h2>ご協力ありがとうございました</h2>
+      <p>いただいたご感想は、スタッフ一同で拝見し<br>今後のランチメニューに活かしてまいります。</p>
+
+      <div class="review-optional">
+        <div class="optional-tag">任意</div>
+        <a class="review-link" href="https://search.google.com/local/writereview?placeid=ChIJeXMJxU8hdV8R5H1WEAt2Myc" target="_blank" rel="noopener">
+          Googleに口コミを書く ↗
+        </a>
+      </div>
+
+      <button class="back-btn" onclick="resetSurvey()">最初の画面に戻る</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let answers = { q1: null, q2: null, q3: null };
+
+document.querySelectorAll('#q1-scale .scale-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#q1-scale .scale-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    answers.q1 = btn.dataset.v;
+    document.getElementById('s1-next').disabled = false;
+  });
+});
+
+function checkS2() {
+  document.getElementById('s2-next').disabled = !(answers.q2 && answers.q3);
+}
+document.querySelectorAll('#q2-
